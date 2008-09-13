@@ -58,12 +58,14 @@ void RenderOutput::flushArea(int x0, int y0, int x1, int y1)
 
 void RenderOutput::paintEvent(QPaintEvent *e)
 {
+	QRect r = m_image.rect();
+	r.moveCenter(rect().center());
 	QPainter p(this);
 	p.setClipRegion(e->region());
 	p.setPen(Qt::black);
 	p.setBrush(palette().window());
-	p.drawRect(m_image.rect());
-	p.drawImage(e->rect().topLeft(), m_image, e->rect());
+	p.drawRect(r);
+	p.drawImage(r.topLeft(), m_image);
 }
 
 void RenderOutput::clear()
