@@ -95,9 +95,9 @@ void RenderOutput::clear()
 bool RenderOutput::saveImage(const QString &path)
 {
 	if (m_alpha)
-		return m_image.save(path);
+		return m_image.save(path, 0);
 	else
-		return removeAlpha(m_image).save(path);
+		return removeAlpha(m_image).save(path, 0);
 }
 
 bool RenderOutput::useAlpha()
