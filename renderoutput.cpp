@@ -6,6 +6,8 @@
 RenderOutput::RenderOutput(QWidget *parent)
 : QWidget(parent)
 {
+	m_alpha = true;
+
 	// use a checkerboard background
 	QPixmap pix(20,20);
 	pix.fill(Qt::white);
@@ -41,19 +43,28 @@ bool RenderOutput::putPixel(int x, int y, const float *c, int channels)
 		if (a < 0) a = 0;
 		color.setAlpha(a);
 	}
+	m_mutex.lock();
 	m_image.setPixel(x,y, color.rgba());
+	m_mutex.unlock();
 	return true;
 }
 
 void RenderOutput::flush()
 {
+	m_updateLock.lock();
 	update();
+	m_updateLock.unlock();
 }
 
 void RenderOutput::flushArea(int x0, int y0, int x1, int y1)
 {
-//	update(QRect(x0, y0, x1-x0, y1-y0));
-	update();
+	m_updateLock.lock();
+	QRect r(x0, y0, x1-x0, y1-y0), r2=m_image.rect();
+	r2.moveCenter(rect().center());
+	r.translate(r2.topLeft());
+	update(r);
+//	update();
+	m_updateLock.unlock();
 }
 
 void RenderOutput::paintEvent(QPaintEvent *e)
@@ -65,7 +76,10 @@ void RenderOutput::paintEvent(QPaintEvent *e)
 	p.setPen(Qt::black);
 	p.setBrush(palette().window());
 	p.drawRect(r);
-	p.drawImage(r.topLeft(), m_image);
+	if (m_alpha)
+		p.drawImage(r.topLeft(), m_image);
+	else
+		p.drawImage(r.topLeft(), removeAlpha(m_image));
 }
 
 void RenderOutput::clear()
@@ -80,5 +94,26 @@ void RenderOutput::clear()
 
 bool RenderOutput::saveImage(const QString &path)
 {
-	return m_image.save(path);
+	if (m_alpha)
+		return m_image.save(path);
+	else
+		return removeAlpha(m_image).save(path);
+}
+
+bool RenderOutput::useAlpha()
+{
+	return m_alpha;
+}
+
+void RenderOutput::setUseAlpha(bool use)
+{
+	m_updateLock.lock();
+	m_alpha = use;
+	update();
+	m_updateLock.unlock();
+}
+
+QImage RenderOutput::removeAlpha(const QImage &img)
+{
+	return img.convertToFormat(QImage::Format_RGB32);
 }

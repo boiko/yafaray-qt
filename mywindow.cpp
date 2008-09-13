@@ -21,6 +21,7 @@ MainWindow::MainWindow(const char *filename)
 	m_ui->renderArea->setBackgroundRole(QPalette::Dark);
 	connect(m_ui->renderButton, SIGNAL(clicked()), this, SLOT(render()));
 	connect(m_worker, SIGNAL(finished()), this, SLOT(slotFinished()));
+	connect(m_ui->alphaCheck, SIGNAL(stateChanged(int)), this, SLOT(slotUseAlpha(int)));
 
 	// actions
 	connect(m_ui->actionOpen, SIGNAL(triggered(bool)),
@@ -114,3 +115,10 @@ void MainWindow::slotSaveAs()
 	}
 }
 
+void MainWindow::slotUseAlpha(int state)
+{
+	bool alpha = (state == Qt::Checked);
+
+	if (alpha != m_output->useAlpha())
+		m_output->setUseAlpha(alpha);
+}

@@ -24,6 +24,7 @@ public slots:
 	void slotOpen();
 	void slotSave();
 	void slotSaveAs();
+	void slotUseAlpha(int state);
 
 private:
 	Ui::WindowBase *m_ui;
