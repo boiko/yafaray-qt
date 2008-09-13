@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMutex>
+#include <QImage>
 #include <core_api/output.h>
 
 class RenderOutput : public QWidget, public yafray::colorOutput_t
