@@ -14,7 +14,7 @@ class MainWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	MainWindow(const char *filename);
+	MainWindow(const char *filename = 0);
 	~MainWindow();
 
 public slots:

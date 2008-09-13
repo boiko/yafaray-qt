@@ -35,7 +35,6 @@ Worker::Worker(const char *filename, RenderOutput *output)
 
 void Worker::run()
 {
+	m_output->clear();
 	m_scene->render();
-	yafray::imageFilm_t *film = m_scene->getImageFilm();
-	delete film;
 }

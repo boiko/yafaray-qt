@@ -12,6 +12,7 @@ public:
 	~RenderOutput();
 
 	void setRenderSize(const QSize &s);
+	void clear();
 
 	// reimplemented from yafaray
 	virtual bool putPixel(int x, int y, const float *c, int channels);

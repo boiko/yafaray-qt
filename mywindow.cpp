@@ -4,9 +4,9 @@
 #include "ui_windowbase.h"
 
 #include <QHBoxLayout>
-#include <QGroupBox>
+#include <QScrollArea>
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(const char *filename)
 : QMainWindow()
 {
 	m_ui = new Ui::WindowBase();
@@ -14,9 +14,8 @@ MainWindow::MainWindow()
 	m_output = new RenderOutput(this);
 	m_worker = new Worker("yafaray.xml", m_output);
 	
-	QHBoxLayout *layout = new QHBoxLayout(m_ui->renderGroup);
-	layout->addWidget(m_output);
-
+	m_ui->renderArea->setWidget(m_output);
+	m_ui->renderArea->setBackgroundRole(QPalette::Dark);
 	connect(m_ui->renderButton, SIGNAL(clicked()), this, SLOT(render()));
 	connect(m_worker, SIGNAL(finished()), this, SLOT(slotEnable()));
 }
