@@ -19,12 +19,18 @@ public:
 
 public slots:
 	void render();
-	void slotEnable();
+	void slotFinished();
+	void slotEnableDisable(bool enable = true);
+	void slotOpen();
+	void slotSave();
+	void slotSaveAs();
 
 private:
 	Ui::WindowBase *m_ui;
 	RenderOutput *m_output;
 	Worker *m_worker;
+	QString m_outputPath;
+	QString m_lastPath;
 };
 
 #endif

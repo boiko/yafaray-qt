@@ -26,6 +26,7 @@ private:
 	yafray::scene_t *m_scene;
 	yafray::paramMap_t *m_render;
 	QString m_file;
+	bool m_valid;
 };
 
 #endif

@@ -77,3 +77,8 @@ void RenderOutput::clear()
 	update();
 	
 }
+
+bool RenderOutput::saveImage(const QString &path)
+{
+	return m_image.save(path);
+}

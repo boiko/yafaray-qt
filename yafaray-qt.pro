@@ -8,7 +8,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # yafaray include
-INCLUDEPATH += $(HOME)/Mestrado/git/yafaray/include $(HOME)/Mestrado/git/yafaray
+INCLUDEPATH += $(YAFARAYPATH)/include $(YAFARAYPATH)
 
 # Input
 HEADERS += mywindow.h renderoutput.h worker.h

@@ -14,6 +14,8 @@ public:
 	void setRenderSize(const QSize &s);
 	void clear();
 
+	bool saveImage(const QString &path);
+
 	// reimplemented from yafaray
 	virtual bool putPixel(int x, int y, const float *c, int channels);
 	void flush();

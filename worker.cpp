@@ -8,6 +8,12 @@
 Worker::Worker(const char *filename, RenderOutput *output)
 : QThread()
 {
+	if (!filename)
+	{
+		m_valid = false;
+		return;
+	}
+
 	m_file = filename;
 	m_output = output;
 	m_env = new yafray::renderEnvironment_t();
@@ -18,8 +24,9 @@ Worker::Worker(const char *filename, RenderOutput *output)
 	if (m_env->getPluginPath(ppath))
 		m_env->loadPlugins(ppath);
 	
-	bool success = parse_xml_file("yafaray.xml", m_scene, m_env, *m_render);
-	if(!success) exit(1);
+	m_valid = parse_xml_file(filename, m_scene, m_env, *m_render);
+	if(!m_valid) 
+		return;
 
 	int w=320, h=240;
 	m_render->getParam("width", w); // width of rendered image
@@ -35,6 +42,8 @@ Worker::Worker(const char *filename, RenderOutput *output)
 
 void Worker::run()
 {
+	if (!m_valid)
+		return;
 	m_output->clear();
 	m_scene->render();
 }
