@@ -25,7 +25,7 @@
 #include <QImage>
 #include <core_api/output.h>
 
-class RenderOutput : public QWidget, public yafray::colorOutput_t
+class RenderOutput : public QWidget, public yafaray::colorOutput_t
 {
 	Q_OBJECT
 public:

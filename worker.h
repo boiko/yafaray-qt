@@ -24,14 +24,13 @@
 #include <QString>
 
 class RenderOutput;
-namespace yafray
+namespace yafaray
 {
 class renderEnvironment_t;
 class render_t;
-class paramMap_t;
 class scene_t;
+class paraMap_t;
 }
-
 
 class Worker : public QThread
 {
@@ -41,9 +40,9 @@ public:
 	void run();
 private:
 	RenderOutput *m_output;
-	yafray::renderEnvironment_t *m_env;
-	yafray::scene_t *m_scene;
-	yafray::paramMap_t *m_render;
+	yafaray::renderEnvironment_t *m_env;
+	yafaray::scene_t *m_scene;
+	yafaray::paraMap_t *m_render;
 	QString m_file;
 	bool m_valid;
 };

@@ -17,12 +17,12 @@
  *
  */
 
-#include "worker.h"
-#include "renderoutput.h"
 #include <core_api/scene.h>
 #include <core_api/environment.h>
 #include <core_api/imagefilm.h>
 #include <yafraycore/xmlparser.h>
+#include "worker.h"
+#include "renderoutput.h"
 
 Worker::Worker(const char *filename, RenderOutput *output)
 : QThread()
@@ -35,9 +35,9 @@ Worker::Worker(const char *filename, RenderOutput *output)
 
 	m_file = filename;
 	m_output = output;
-	m_env = new yafray::renderEnvironment_t();
-	m_scene = new yafray::scene_t();
-	m_render = new yafray::paramMap_t();
+	m_env = new yafaray::renderEnvironment_t();
+	m_scene = new yafaray::scene_t();
+	m_render = new yafaray::paraMap_t();
 
 	std::string ppath;
 	if (m_env->getPluginPath(ppath))
